@@ -14,7 +14,6 @@ public class Leaf : Area2D
 	{
 		if (input.IsActionPressed("interact"))
 		{
-			GD.Print("Leaf clicked");
 			EmitSignal("LeafClicked");
 		}
 	}

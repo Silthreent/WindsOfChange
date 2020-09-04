@@ -5,20 +5,33 @@ public class LeafManager : Node2D
 	[Export]
 	PackedScene LeafScene;
 
-	Leaf[] Leaves;
+	Tree[] Trees;
 	Leaf HeldLeaf;
-
+	 
 	public override void _Ready()
 	{
-		Leaves = new Leaf[3];
-		for(int x = 0; x < Leaves.Length; x++)
+		Trees = new Tree[3];
+		Trees[0] = GetNode<Node2D>("Tree0") as Tree;
+
+		for(int x = 0; x < Trees.Length; x++)
 		{
-			var leaf = LeafScene.Instance() as Leaf;
-			leaf.GlobalPosition = new Vector2(100 * (x + 1), (100 * (x + 1)) / 2);
-			AddChild(leaf);
-			Leaves[x] = leaf;
-			leaf.Connect("LeafClicked", this, "OnLeafClicked", new Godot.Collections.Array() { x });
+			if (Trees[x] == null)
+				continue;
+
+			int count = 0;
+			foreach (Node2D leafPos in Trees[x].GetChildren())
+			{
+				leafPos.GetNode<Sprite>("TestLeaf").Visible = false;
+
+				var leaf = LeafScene.Instance() as Leaf;
+				leafPos.AddChild(leaf);
+				leaf.Connect("LeafClicked", this, "OnLeafClicked", new Godot.Collections.Array() { 0, count });
+				Trees[0].AddLeaf(leaf);
+
+				count++;
+			}
 		}
+		
 	}
 
 	public override void _PhysicsProcess(float delta)
@@ -34,12 +47,12 @@ public class LeafManager : Node2D
 		}
 	}
 
-	void OnLeafClicked(int leafNumber)
+	void OnLeafClicked(int treeNumber, int leafNumber)
 	{
 		if(HeldLeaf == null)
 		{
-			GD.Print($"Manger managing leaf: {leafNumber}");
-			HeldLeaf = Leaves[leafNumber];
+			GD.Print($"Picking up leaf: {leafNumber}");
+			HeldLeaf = Trees[treeNumber].GetLeaf(leafNumber);
 		}
 	}
 }
