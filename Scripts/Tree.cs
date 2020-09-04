@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using System.Collections.Generic;
 
 public class Tree : Sprite
@@ -21,8 +20,30 @@ public class Tree : Sprite
 		Leaves.Remove(leaf);
 	}
 
+	public void ColorFirstAvailableLeaf(LeafColor color, int starting)
+	{
+		if (starting >= Leaves.Count)
+			starting = 0;
+
+		if(Leaves[starting].Color == LeafColor.None)
+		{
+			if (Leaves[starting].Color != color)
+			{
+				Leaves[starting].SetColor(color);
+				return;
+			}
+		}
+
+		ColorFirstAvailableLeaf(color, starting + 1);
+	}
+
 	public Leaf GetLeaf(int leafID)
 	{
 		return Leaves.Find(x => x.ID == leafID);
+	}
+
+	public int GetLeafCount()
+	{
+		return Leaves.Count;
 	}
 }

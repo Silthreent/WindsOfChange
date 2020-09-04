@@ -10,7 +10,7 @@ public class Leaf : Area2D
 
 	static int IDCount = 0;
 
-	LeafColor Color;
+	public LeafColor Color { protected set; get; }
 	Sprite Sprite;
 
 	public Leaf()
@@ -43,10 +43,10 @@ public class Leaf : Area2D
 
 public enum LeafColor
 {
+	None,
 	Red,
 	Green,
-	Blue,
-	None
+	Blue
 }
 
 public static class LeafColorExtension

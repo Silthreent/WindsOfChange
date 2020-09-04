@@ -9,7 +9,7 @@ public class LeafManager : Node2D
 	Tree[] Trees;
 	Leaf HeldLeaf;
 	Random RNG;
-	 
+	
 	public override void _Ready()
 	{
 		RNG = new Random();
@@ -23,19 +23,9 @@ public class LeafManager : Node2D
 			if (Trees[x] == null)
 				continue;
 
-			int count = 0;
 			foreach (Node2D leafPos in Trees[x].GetChildren())
 			{
 				leafPos.GetNode<Sprite>("TestLeaf").Visible = false;
-
-				var leaf = LeafScene.Instance() as Leaf;
-				leafPos.AddChild(leaf);
-				leaf.Connect("LeafClicked", this, "OnLeafClicked");
-				Trees[x].AddLeaf(leaf);
-				leaf.ParentTree = x;
-
-				leaf.SetColor((LeafColor)RNG.Next(0, 2));
-				count++;
 			}
 		}
 	}
@@ -69,25 +59,7 @@ public class LeafManager : Node2D
 				if(WinningLeaf != null)
 				{
 					GD.Print($"Closest leaf is {WinningLeaf.ID} of tree {WinningLeaf.ParentTree}");
-					Trees[HeldLeaf.ParentTree].RemoveLeaf(HeldLeaf);
-					Trees[WinningLeaf.ParentTree].RemoveLeaf(WinningLeaf);
-
-					Trees[HeldLeaf.ParentTree].AddLeaf(WinningLeaf);
-					Trees[WinningLeaf.ParentTree].AddLeaf(HeldLeaf);
-
-					var parent = HeldLeaf.GetParent();
-					var parentTree = HeldLeaf.ParentTree;
-
-					HeldLeaf.GetParent().RemoveChild(HeldLeaf);
-					WinningLeaf.GetParent().AddChild(HeldLeaf);
-
-					WinningLeaf.GetParent().RemoveChild(WinningLeaf);
-					parent.AddChild(WinningLeaf);
-
-					HeldLeaf.Position = Vector2.Zero;
-
-					HeldLeaf.ParentTree = WinningLeaf.ParentTree;
-					WinningLeaf.ParentTree = parentTree;
+					SwapLeaves(HeldLeaf, WinningLeaf);
 				}
 				else
 				{
@@ -98,6 +70,58 @@ public class LeafManager : Node2D
 				HeldLeaf = null;
 			}
 		}
+	}
+
+	public void GenerateLeaves(LeafColor[] colors)
+	{
+		for (int x = 0; x < Trees.Length; x++)
+		{
+			if (Trees[x] == null)
+				continue;
+
+			foreach (Node2D leafPos in Trees[x].GetChildren())
+			{
+				var leaf = LeafScene.Instance() as Leaf;
+				leafPos.AddChild(leaf);
+				leaf.Connect("LeafClicked", this, "OnLeafClicked");
+				Trees[x].AddLeaf(leaf);
+				leaf.ParentTree = x;
+			}
+		}
+
+		int leafCount = 0;
+		for(int color = 0; color < colors.Length; color++)
+		{
+			for (int x = 0; x < Trees[0].GetLeafCount(); x++)
+			{
+				Trees[leafCount % Trees.Length].ColorFirstAvailableLeaf(colors[color], RNG.Next(0, Trees[leafCount % Trees.Length].GetLeafCount()));
+
+				leafCount++;
+			}
+		}
+	}
+
+	void SwapLeaves(Leaf leaf1, Leaf leaf2)
+	{
+		Trees[leaf1.ParentTree].RemoveLeaf(leaf1);
+		Trees[leaf2.ParentTree].RemoveLeaf(leaf2);
+
+		Trees[leaf1.ParentTree].AddLeaf(leaf2);
+		Trees[leaf2.ParentTree].AddLeaf(leaf1);
+
+		var parent = leaf1.GetParent();
+		var parentTree = leaf1.ParentTree;
+
+		leaf1.GetParent().RemoveChild(leaf1);
+		leaf2.GetParent().AddChild(leaf1);
+
+		leaf2.GetParent().RemoveChild(leaf2);
+		parent.AddChild(leaf2);
+
+		leaf1.Position = Vector2.Zero;
+
+		leaf1.ParentTree = leaf2.ParentTree;
+		leaf2.ParentTree = parentTree;
 	}
 
 	void OnLeafClicked(int treeNumber, int leafID)
