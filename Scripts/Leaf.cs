@@ -10,6 +10,9 @@ public class Leaf : Area2D
 
 	static int IDCount = 0;
 
+	LeafColor Color;
+	Sprite Sprite;
+
 	public Leaf()
 	{
 		ID = IDCount++;
@@ -17,7 +20,16 @@ public class Leaf : Area2D
 
 	public override void _Ready()
 	{
+		Sprite = GetNode<Sprite>("Sprite");
+
 		Connect("input_event", this, "OnInputEvent");
+	}
+
+	public void SetColor(LeafColor color)
+	{
+		Color = color;
+
+		Sprite.Modulate = color.GetLeafColor();
 	}
 
 	void OnInputEvent(Node viewport, InputEvent input, int shapeID)
@@ -28,3 +40,33 @@ public class Leaf : Area2D
 		}
 	}
 }
+
+public enum LeafColor
+{
+	None,
+	Red,
+	Green,
+	Blue
+}
+
+public static class LeafColorExtension
+{
+	public static Color GetLeafColor(this LeafColor leafColor)
+	{
+		switch(leafColor)
+		{
+			case LeafColor.Red:
+				return new Color(255, 0, 0);
+
+			case LeafColor.Green:
+				return new Color(0, 255, 0);
+
+			case LeafColor.Blue:
+				return new Color(0, 0, 255);
+
+			default:
+				return new Color(0, 0, 0);
+		}
+	}
+}
+

@@ -1,4 +1,5 @@
 using Godot;
+using System;
 
 public class LeafManager : Node2D
 {
@@ -7,9 +8,12 @@ public class LeafManager : Node2D
 
 	Tree[] Trees;
 	Leaf HeldLeaf;
+	Random RNG;
 	 
 	public override void _Ready()
 	{
+		RNG = new Random();
+
 		Trees = new Tree[2];
 
 		for (int x = 0; x < Trees.Length; x++)
@@ -30,10 +34,10 @@ public class LeafManager : Node2D
 				Trees[x].AddLeaf(leaf);
 				leaf.ParentTree = x;
 
+				leaf.SetColor((LeafColor)RNG.Next(0, Enum.GetValues(typeof(LeafColor)).Length));
 				count++;
 			}
 		}
-		
 	}
 
 	public override void _PhysicsProcess(float delta)
@@ -62,6 +66,7 @@ public class LeafManager : Node2D
 					}
 				}
 
+				// TODO: Have leaf remember where it came from and make sure it's not being set down in the same place
 				GD.Print($"Closest leaf is {WinningLeaf.ID} of tree {WinningLeaf.ParentTree}");
 				Trees[HeldLeaf.ParentTree].RemoveLeaf(HeldLeaf);
 				Trees[WinningLeaf.ParentTree].RemoveLeaf(WinningLeaf);
@@ -70,6 +75,8 @@ public class LeafManager : Node2D
 				Trees[WinningLeaf.ParentTree].AddLeaf(HeldLeaf);
 
 				var parent = HeldLeaf.GetParent();
+				var parentTree = HeldLeaf.ParentTree;
+
 				HeldLeaf.GetParent().RemoveChild(HeldLeaf);
 				WinningLeaf.GetParent().AddChild(HeldLeaf);
 
@@ -77,6 +84,9 @@ public class LeafManager : Node2D
 				parent.AddChild(WinningLeaf);
 
 				HeldLeaf.Position = Vector2.Zero;
+
+				HeldLeaf.ParentTree = WinningLeaf.ParentTree;
+				WinningLeaf.ParentTree = parentTree;
 
 				HeldLeaf = null;
 			}
