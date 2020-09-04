@@ -34,7 +34,7 @@ public class LeafManager : Node2D
 				Trees[x].AddLeaf(leaf);
 				leaf.ParentTree = x;
 
-				leaf.SetColor((LeafColor)RNG.Next(0, Enum.GetValues(typeof(LeafColor)).Length));
+				leaf.SetColor((LeafColor)RNG.Next(0, 2));
 				count++;
 			}
 		}
@@ -48,7 +48,7 @@ public class LeafManager : Node2D
 
 			if(!Input.IsActionPressed("interact"))
 			{
-				float WinningDistance = 9999;
+				float WinningDistance = HeldLeaf.GlobalPosition.DistanceTo((HeldLeaf.GetParent() as Node2D).GlobalPosition);
 				Leaf WinningLeaf = null;
 
 				foreach(var x in HeldLeaf.GetOverlappingAreas())
@@ -58,7 +58,7 @@ public class LeafManager : Node2D
 					{
 						var distance = HeldLeaf.GlobalPosition.DistanceTo(leaf.GlobalPosition);
 
-						if (WinningLeaf == null || distance < WinningDistance)
+						if (distance < WinningDistance)
 						{
 							WinningLeaf = leaf;
 							WinningDistance = distance;
@@ -66,27 +66,34 @@ public class LeafManager : Node2D
 					}
 				}
 
-				// TODO: Have leaf remember where it came from and make sure it's not being set down in the same place
-				GD.Print($"Closest leaf is {WinningLeaf.ID} of tree {WinningLeaf.ParentTree}");
-				Trees[HeldLeaf.ParentTree].RemoveLeaf(HeldLeaf);
-				Trees[WinningLeaf.ParentTree].RemoveLeaf(WinningLeaf);
+				if(WinningLeaf != null)
+				{
+					GD.Print($"Closest leaf is {WinningLeaf.ID} of tree {WinningLeaf.ParentTree}");
+					Trees[HeldLeaf.ParentTree].RemoveLeaf(HeldLeaf);
+					Trees[WinningLeaf.ParentTree].RemoveLeaf(WinningLeaf);
 
-				Trees[HeldLeaf.ParentTree].AddLeaf(WinningLeaf);
-				Trees[WinningLeaf.ParentTree].AddLeaf(HeldLeaf);
+					Trees[HeldLeaf.ParentTree].AddLeaf(WinningLeaf);
+					Trees[WinningLeaf.ParentTree].AddLeaf(HeldLeaf);
 
-				var parent = HeldLeaf.GetParent();
-				var parentTree = HeldLeaf.ParentTree;
+					var parent = HeldLeaf.GetParent();
+					var parentTree = HeldLeaf.ParentTree;
 
-				HeldLeaf.GetParent().RemoveChild(HeldLeaf);
-				WinningLeaf.GetParent().AddChild(HeldLeaf);
+					HeldLeaf.GetParent().RemoveChild(HeldLeaf);
+					WinningLeaf.GetParent().AddChild(HeldLeaf);
 
-				WinningLeaf.GetParent().RemoveChild(WinningLeaf);
-				parent.AddChild(WinningLeaf);
+					WinningLeaf.GetParent().RemoveChild(WinningLeaf);
+					parent.AddChild(WinningLeaf);
 
-				HeldLeaf.Position = Vector2.Zero;
+					HeldLeaf.Position = Vector2.Zero;
 
-				HeldLeaf.ParentTree = WinningLeaf.ParentTree;
-				WinningLeaf.ParentTree = parentTree;
+					HeldLeaf.ParentTree = WinningLeaf.ParentTree;
+					WinningLeaf.ParentTree = parentTree;
+				}
+				else
+				{
+					GD.Print("Placing leaf back");
+					HeldLeaf.Position = Vector2.Zero;
+				}
 
 				HeldLeaf = null;
 			}

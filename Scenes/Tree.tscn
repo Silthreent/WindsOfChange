@@ -343,15 +343,6 @@ scale = Vector2( 0.25, 0.25 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 3 )
 
-[node name="37" type="Node2D" parent="."]
-position = Vector2( 30.1121, 31.0917 )
-rotation = 19.0008
-scale = Vector2( 0.25, 0.25 )
-
-[node name="TestLeaf" type="Sprite" parent="37"]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 3 )
-
 [node name="38" type="Node2D" parent="."]
 position = Vector2( -35.4556, -4.13574 )
 rotation = 22.0364

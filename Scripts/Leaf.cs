@@ -43,10 +43,10 @@ public class Leaf : Area2D
 
 public enum LeafColor
 {
-	None,
 	Red,
 	Green,
-	Blue
+	Blue,
+	None
 }
 
 public static class LeafColorExtension
