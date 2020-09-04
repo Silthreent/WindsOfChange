@@ -3,7 +3,17 @@ using Godot;
 public class Leaf : Area2D
 {
 	[Signal]
-	delegate void LeafClicked();
+	delegate void LeafClicked(int tree, int id);
+
+	public int ParentTree { get; set;  }
+	public int ID { get; set; }
+
+	static int IDCount = 0;
+
+	public Leaf()
+	{
+		ID = IDCount++;
+	}
 
 	public override void _Ready()
 	{
@@ -14,7 +24,7 @@ public class Leaf : Area2D
 	{
 		if (input.IsActionPressed("interact"))
 		{
-			EmitSignal("LeafClicked");
+			EmitSignal("LeafClicked", ParentTree, ID);
 		}
 	}
 }

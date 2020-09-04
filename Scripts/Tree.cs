@@ -16,8 +16,13 @@ public class Tree : Sprite
 		Leaves.Add(leaf);
 	}
 
-	public Leaf GetLeaf(int leaf)
+	public void RemoveLeaf(Leaf leaf)
 	{
-		return Leaves[leaf];
+		Leaves.Remove(leaf);
+	}
+
+	public Leaf GetLeaf(int leafID)
+	{
+		return Leaves.Find(x => x.ID == leafID);
 	}
 }
