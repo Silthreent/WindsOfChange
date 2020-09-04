@@ -5,12 +5,13 @@ public class Leaf : Area2D
 	[Signal]
 	delegate void LeafClicked(int tree, int id);
 
-	public int ParentTree { get; set;  }
-	public int ID { get; set; }
-
 	static int IDCount = 0;
 
-	public LeafColor Color { protected set; get; }
+	public int ParentTree { get; set;  }
+	public int ID { get; set; }
+	public LeafColor Color { get; protected set; }
+	public RigidBody2D Body { get; protected set; }
+
 	Sprite Sprite;
 
 	public Leaf()
@@ -20,7 +21,8 @@ public class Leaf : Area2D
 
 	public override void _Ready()
 	{
-		Sprite = GetNode<Sprite>("Sprite");
+		Sprite = FindNode("Sprite") as Sprite;
+		Body = GetNode<RigidBody2D>("Body");
 
 		Connect("input_event", this, "OnInputEvent");
 	}

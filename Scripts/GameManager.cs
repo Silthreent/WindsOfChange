@@ -46,7 +46,17 @@ public class GameManager : Node2D
 		MoveCount++;
 		GD.Print($"Move Count: {MoveCount}");
 
-		if(CheckVictory())
+		if (CheckVictory())
+		{
 			GD.Print("VICTORY");
+			int treeCheck = 0;
+			Tree workingTree;
+			while ((workingTree = LeafManager.GetTree(treeCheck)) != null)
+			{
+				workingTree.DropLeaves();
+
+				treeCheck++;
+			}
+		}
 	}
 }
