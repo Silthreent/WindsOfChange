@@ -37,9 +37,14 @@ public class Tree : Sprite
 		ColorFirstAvailableLeaf(color, starting + 1);
 	}
 
-	public Leaf GetLeaf(int leafID)
+	public Leaf GetLeafByID(int leafID)
 	{
 		return Leaves.Find(x => x.ID == leafID);
+	}
+
+	public Leaf GetLeafByIndex(int index)
+	{
+		return Leaves[index];
 	}
 
 	public int GetLeafCount()

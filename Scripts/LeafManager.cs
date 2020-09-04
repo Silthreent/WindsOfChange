@@ -3,6 +3,9 @@ using System;
 
 public class LeafManager : Node2D
 {
+	[Signal]
+	delegate void LeafMoved(Leaf clickedLeaf, Leaf landedLeaf);
+
 	[Export]
 	PackedScene LeafScene;
 
@@ -101,6 +104,14 @@ public class LeafManager : Node2D
 		}
 	}
 
+	public Tree GetTree(int treeID)
+	{
+		if (treeID >= Trees.Length)
+			return null;
+
+		return Trees[treeID];
+	}
+
 	void SwapLeaves(Leaf leaf1, Leaf leaf2)
 	{
 		Trees[leaf1.ParentTree].RemoveLeaf(leaf1);
@@ -122,6 +133,8 @@ public class LeafManager : Node2D
 
 		leaf1.ParentTree = leaf2.ParentTree;
 		leaf2.ParentTree = parentTree;
+
+		EmitSignal("LeafMoved", leaf1, leaf2);
 	}
 
 	void OnLeafClicked(int treeNumber, int leafID)
@@ -129,7 +142,7 @@ public class LeafManager : Node2D
 		if(HeldLeaf == null)
 		{
 			GD.Print($"Picking up leaf: {leafID}");
-			HeldLeaf = Trees[treeNumber].GetLeaf(leafID);
+			HeldLeaf = Trees[treeNumber].GetLeafByID(leafID);
 		}
 	}
 }
