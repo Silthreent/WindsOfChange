@@ -47,6 +47,13 @@ public class GameManager : Node2D
 		TimerText.Text = Timer.ToString("0").ToString();
 	}
 
+	public void ToggleStressFreeMode(bool mode)
+	{
+		MoveCountText.Visible = !mode;
+		TotalMoveCountText.Visible = !mode;
+		TimerText.Visible = !mode;
+	}
+
 	bool CheckVictory()
 	{
 		int treeCheck = 0;
