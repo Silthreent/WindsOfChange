@@ -9,7 +9,10 @@ script = ExtResource( 1 )
 LeafScene = ExtResource( 2 )
 
 [node name="Tree0" parent="." instance=ExtResource( 3 )]
-position = Vector2( 267.326, 264.405 )
+position = Vector2( 271.848, 247.824 )
 
 [node name="Tree1" parent="." instance=ExtResource( 3 )]
-position = Vector2( 791.146, 280.615 )
+position = Vector2( 1035.34, 261.02 )
+
+[node name="Tree2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 617.405, 591.498 )

@@ -25,7 +25,7 @@ public class LeafManager : Node2D
 	{
 		RNG = new Random();
 
-		Trees = new Tree[2];
+		Trees = new Tree[3];
 
 		for (int x = 0; x < Trees.Length; x++)
 		{

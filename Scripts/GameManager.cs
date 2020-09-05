@@ -15,7 +15,7 @@ public class GameManager : Node2D
 		LeafManager.Connect("LeavesDropped", this, "OnLeavesDropped");
 		LeafManager.Connect("SkyLeavesDropped", this, "OnSkyLeavesDropped");
 
-		LeafManager.GenerateLeaves(new LeafColor[] { LeafColor.Blue, LeafColor.Green });
+		LeafManager.GenerateLeaves(new LeafColor[] { LeafColor.Blue, LeafColor.Green, LeafColor.Red });
 	}
 
 	bool CheckVictory()
@@ -63,7 +63,7 @@ public class GameManager : Node2D
 	{
 		if(!GeneratedLeaves)
 		{
-			LeafManager.GenerateLeaves(new LeafColor[] { LeafColor.Blue, LeafColor.Green });
+			LeafManager.GenerateLeaves(new LeafColor[] { LeafColor.Blue, LeafColor.Green, LeafColor.Red });
 			GeneratedLeaves = true;
 		}
 	}
