@@ -15,7 +15,7 @@ public class Leaf : Area2D
 	public RigidBody2D Body { get; protected set; }
 	public bool IsSkyFalling { get; set; } = false;
 
-	Sprite Sprite;
+	AnimatedSprite Sprite;
 
 	public Leaf()
 	{
@@ -24,7 +24,7 @@ public class Leaf : Area2D
 
 	public override void _Ready()
 	{
-		Sprite = FindNode("Sprite") as Sprite;
+		Sprite = FindNode("Sprite") as AnimatedSprite;
 		Body = GetNode<RigidBody2D>("Body");
 
 		Connect("input_event", this, "OnInputEvent");
@@ -34,7 +34,7 @@ public class Leaf : Area2D
 	{
 		if (!IsSkyFalling)
 		{
-			if (Body.GlobalPosition.y >= GetViewport().Size.y + Sprite.Texture.GetSize().y)
+			if (Body.GlobalPosition.y >= GetViewport().Size.y + 50)
 				QueueFree();
 
 			return;
@@ -87,13 +87,13 @@ public static class LeafColorExtension
 		switch(leafColor)
 		{
 			case LeafColor.Red:
-				return new Color(255, 0, 0);
+				return new Color(1, 0, 0);
 
 			case LeafColor.Green:
-				return new Color(0, 255, 0);
+				return new Color(0, 1, 0);
 
 			case LeafColor.Blue:
-				return new Color(0, 0, 255);
+				return new Color(0, 0, 1);
 
 			default:
 				return new Color(0, 0, 0);

@@ -1,10 +1,23 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Assets/Sprites/Leaf.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Sprites/LeafAnimation.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Leaf.cs" type="Script" id=2]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 21.878, 31.548 )
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 1 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ) ],
+"loop": true,
+"name": "default",
+"speed": 3.0
+} ]
 
 [node name="Leaf" type="Area2D"]
 script = ExtResource( 2 )
@@ -14,10 +27,12 @@ collision_layer = 0
 collision_mask = 0
 gravity_scale = 0.0
 
-[node name="Sprite" type="Sprite" parent="Body"]
+[node name="Sprite" type="AnimatedSprite" parent="Body"]
 scale = Vector2( 2, 2 )
-texture = ExtResource( 1 )
+frames = SubResource( 3 )
+frame = 1
+playing = true
 
-[node name="Shape" type="CollisionShape2D" parent="."]
+[node name="Shape" type="CollisionPolygon2D" parent="."]
 position = Vector2( 1.97, -0.232 )
-shape = SubResource( 1 )
+polygon = PoolVector2Array( 12.0294, -31.4145, 11.7975, -27.8191, 0.431215, -27.7031, -11.0566, -17.796, -21.6054, -3.92672, -22.3013, 30.52, -12.0949, 30.404, 1.47289, 23.8695, 13.4057, 14.5221, 22.3519, 2.10436, 22.0039, -19.4683, 20.0682, -23.3646, 16.4368, -26.1953, 16.0888, -31.4145 )

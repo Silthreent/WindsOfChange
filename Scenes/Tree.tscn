@@ -343,9 +343,18 @@ scale = Vector2( 0.25, 0.25 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 3 )
 
-[node name="38" type="Node2D" parent="."]
+[node name="37" type="Node2D" parent="."]
 position = Vector2( -35.4556, -4.13574 )
 rotation = 22.0364
+scale = Vector2( 0.25, 0.25 )
+
+[node name="TestLeaf" type="Sprite" parent="37"]
+scale = Vector2( 2, 2 )
+texture = ExtResource( 3 )
+
+[node name="38" type="Node2D" parent="."]
+position = Vector2( -52.5602, -41.1958 )
+rotation = 25.4637
 scale = Vector2( 0.25, 0.25 )
 
 [node name="TestLeaf" type="Sprite" parent="38"]
@@ -353,8 +362,8 @@ scale = Vector2( 2, 2 )
 texture = ExtResource( 3 )
 
 [node name="39" type="Node2D" parent="."]
-position = Vector2( -52.5602, -41.1958 )
-rotation = 25.4637
+position = Vector2( -8.37326, -39.7704 )
+rotation = 23.9128
 scale = Vector2( 0.25, 0.25 )
 
 [node name="TestLeaf" type="Sprite" parent="39"]
@@ -362,8 +371,8 @@ scale = Vector2( 2, 2 )
 texture = ExtResource( 3 )
 
 [node name="40" type="Node2D" parent="."]
-position = Vector2( -8.37326, -39.7704 )
-rotation = 23.9128
+position = Vector2( 4.25156, -47.5082 )
+rotation = 23.4664
 scale = Vector2( 0.25, 0.25 )
 
 [node name="TestLeaf" type="Sprite" parent="40"]
@@ -371,8 +380,8 @@ scale = Vector2( 2, 2 )
 texture = ExtResource( 3 )
 
 [node name="41" type="Node2D" parent="."]
-position = Vector2( 4.25156, -47.5082 )
-rotation = 23.4664
+position = Vector2( -28.7359, -63.5947 )
+rotation = 21.7801
 scale = Vector2( 0.25, 0.25 )
 
 [node name="TestLeaf" type="Sprite" parent="41"]
@@ -380,19 +389,10 @@ scale = Vector2( 2, 2 )
 texture = ExtResource( 3 )
 
 [node name="42" type="Node2D" parent="."]
-position = Vector2( -28.7359, -63.5947 )
-rotation = 21.7801
-scale = Vector2( 0.25, 0.25 )
-
-[node name="TestLeaf" type="Sprite" parent="42"]
-scale = Vector2( 2, 2 )
-texture = ExtResource( 3 )
-
-[node name="43" type="Node2D" parent="."]
 position = Vector2( -66.4069, -2.30309 )
 rotation = 19.7506
 scale = Vector2( 0.25, 0.25 )
 
-[node name="TestLeaf" type="Sprite" parent="43"]
+[node name="TestLeaf" type="Sprite" parent="42"]
 scale = Vector2( 2, 2 )
 texture = ExtResource( 3 )
