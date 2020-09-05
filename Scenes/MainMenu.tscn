@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scripts/MainMenu.cs" type="Script" id=1]
 [ext_resource path="res://Assets/Kenney High.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Scenes/LeafManager.tscn" type="PackedScene" id=3]
 
 [sub_resource type="DynamicFont" id=2]
 font_data = ExtResource( 2 )
@@ -24,6 +25,18 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="LeafManager" parent="." instance=ExtResource( 3 )]
+position = Vector2( 433.319, -96.8359 )
+
+[node name="Tree0" parent="LeafManager" index="0"]
+position = Vector2( 9.63177, 168.437 )
+
+[node name="Tree1" parent="LeafManager" index="1"]
+position = Vector2( 1628.07, 267.885 )
+
+[node name="Tree2" parent="LeafManager" index="2"]
+position = Vector2( 1046.39, 259.174 )
 
 [node name="VBox" type="VBoxContainer" parent="."]
 margin_right = 212.0
@@ -53,3 +66,10 @@ margin_right = 212.0
 margin_bottom = 40.0
 focus_mode = 0
 enabled_focus_mode = 0
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 322.095, 36.4935 )
+current = true
+zoom = Vector2( 0.6, 0.6 )
+
+[editable path="LeafManager"]
