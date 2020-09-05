@@ -4,9 +4,15 @@ public class GameManager : Node2D
 {
 	LeafManager LeafManager;
 	Label WinCountText;
+	Label MoveCountText;
+	Label TotalMoveCountText;
+	Label TimerText;
 
 	int MoveCount = 0;
+	int TotalMoveCount = 0;
 	int WinCount = 0;
+	float Timer = 0;
+	bool IsTimerPaused = true;
 
 	bool GeneratedLeaves = false;
 
@@ -21,6 +27,24 @@ public class GameManager : Node2D
 
 		WinCountText = FindNode("WinCount") as Label;
 		WinCountText.Text = WinCount.ToString();
+
+		MoveCountText = FindNode("MoveCount") as Label;
+		MoveCountText.Text = MoveCount.ToString();
+
+		TotalMoveCountText = FindNode("TotalMoveCount") as Label;
+		TotalMoveCountText.Text = TotalMoveCount.ToString();
+
+		TimerText = FindNode("Timer") as Label;
+		TimerText.Text = Timer.ToString("0").ToString();
+	}
+
+	public override void _Process(float delta)
+	{
+		if (IsTimerPaused)
+			return;
+
+		Timer += delta;
+		TimerText.Text = Timer.ToString("0").ToString();
 	}
 
 	bool CheckVictory()
@@ -53,6 +77,9 @@ public class GameManager : Node2D
 	void OnLeafMoved(Leaf leaf1, Leaf leaf2)
 	{
 		MoveCount++;
+		TotalMoveCount++;
+		MoveCountText.Text = MoveCount.ToString();
+		TotalMoveCountText.Text = MoveCount.ToString();
 
 		GD.Print($"Move Count: {MoveCount}");
 
@@ -61,8 +88,11 @@ public class GameManager : Node2D
 			GD.Print("VICTORY");
 			WinCount++;
 			WinCountText.Text = WinCount.ToString();
+
 			GD.Print($"Wins: {WinCount}");
 			LeafManager.DropLeaves();
+
+			IsTimerPaused = true;
 		}
 	}
 
@@ -78,5 +108,10 @@ public class GameManager : Node2D
 	void OnSkyLeavesDropped()
 	{
 		GeneratedLeaves = false;
+
+		MoveCount = 0;
+		MoveCountText.Text = MoveCount.ToString();
+
+		IsTimerPaused = false;
 	}
 }

@@ -27,3 +27,51 @@ valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="MoveCount" type="Label" parent="."]
+modulate = Color( 1, 1, 1, 0.0470588 )
+margin_left = 969.583
+margin_top = 303.382
+margin_right = 1065.58
+margin_bottom = 415.382
+grow_horizontal = 2
+grow_vertical = 2
+custom_fonts/font = SubResource( 1 )
+text = "2"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TotalMoveCount" type="Label" parent="."]
+modulate = Color( 1, 1, 1, 0.0470588 )
+margin_left = 999.729
+margin_top = 174.861
+margin_right = 1095.73
+margin_bottom = 286.861
+grow_horizontal = 2
+grow_vertical = 2
+custom_fonts/font = SubResource( 1 )
+text = "2"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Label" parent="."]
+modulate = Color( 1, 1, 1, 0.0470588 )
+margin_left = 182.592
+margin_top = 306.555
+margin_right = 278.592
+margin_bottom = 418.555
+grow_horizontal = 2
+grow_vertical = 2
+custom_fonts/font = SubResource( 1 )
+text = "2"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
