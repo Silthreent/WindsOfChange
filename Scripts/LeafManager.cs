@@ -4,14 +4,22 @@ using System;
 public class LeafManager : Node2D
 {
 	[Signal]
+	delegate void SkyLeavesDropped();
+	[Signal]
 	delegate void LeafMoved(Leaf clickedLeaf, Leaf landedLeaf);
+	[Signal]
+	delegate void LeavesDropped();
 
 	[Export]
 	PackedScene LeafScene;
+	public bool Paused { get; set; } = false;
 
 	Tree[] Trees;
 	Leaf HeldLeaf;
 	Random RNG;
+
+	int TreesDropping = 0;
+	int SkyLeavesDropping = 0;
 	
 	public override void _Ready()
 	{
@@ -22,6 +30,7 @@ public class LeafManager : Node2D
 		for (int x = 0; x < Trees.Length; x++)
 		{
 			Trees[x] = GetNode<Tree>("Tree" + x);
+			Trees[x].Connect("LeavesDropped", this, "OnLeavesDropped");
 
 			if (Trees[x] == null)
 				continue;
@@ -82,13 +91,23 @@ public class LeafManager : Node2D
 			if (Trees[x] == null)
 				continue;
 
+			TreesDropping++;
+
 			foreach (Node2D leafPos in Trees[x].GetChildren())
 			{
 				var leaf = LeafScene.Instance() as Leaf;
 				leafPos.AddChild(leaf);
 				leaf.Connect("LeafClicked", this, "OnLeafClicked");
+				leaf.Connect("SkyLeafDropped", this, "OnSkyLeafDropped");
+
 				Trees[x].AddLeaf(leaf);
+
 				leaf.ParentTree = x;
+				leaf.Body.GlobalPosition = new Vector2(leaf.GlobalPosition.x, RNG.Next(-150, -50));
+				leaf.Body.GravityScale = 2;
+				leaf.IsSkyFalling = true;
+
+				SkyLeavesDropping++;
 			}
 		}
 
@@ -102,6 +121,17 @@ public class LeafManager : Node2D
 				leafCount++;
 			}
 		}
+	}
+
+	public void DropLeaves()
+	{
+		foreach(var x in Trees)
+		{
+			x.DropLeaves();
+		}
+
+		HeldLeaf = null;
+		Paused = true;
 	}
 
 	public Tree GetTree(int treeID)
@@ -139,10 +169,32 @@ public class LeafManager : Node2D
 
 	void OnLeafClicked(int treeNumber, int leafID)
 	{
+		if (Paused)
+			return;
+
 		if(HeldLeaf == null)
 		{
 			GD.Print($"Picking up leaf: {leafID}");
 			HeldLeaf = Trees[treeNumber].GetLeafByID(leafID);
+		}
+	}
+
+	void OnSkyLeafDropped()
+	{
+		SkyLeavesDropping--;
+		if(SkyLeavesDropping <= 0)
+		{
+			EmitSignal("SkyLeavesDropped");
+			Paused = false;
+		}
+	}
+
+	void OnLeavesDropped()
+	{
+		TreesDropping--;
+		if(TreesDropping <= 0)
+		{
+			EmitSignal("LeavesDropped");
 		}
 	}
 }

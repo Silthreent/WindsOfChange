@@ -4,6 +4,8 @@ public class Leaf : Area2D
 {
 	[Signal]
 	delegate void LeafClicked(int tree, int id);
+	[Signal]
+	delegate void SkyLeafDropped();
 
 	static int IDCount = 0;
 
@@ -11,6 +13,7 @@ public class Leaf : Area2D
 	public int ID { get; set; }
 	public LeafColor Color { get; protected set; }
 	public RigidBody2D Body { get; protected set; }
+	public bool IsSkyFalling { get; set; } = false;
 
 	Sprite Sprite;
 
@@ -27,6 +30,29 @@ public class Leaf : Area2D
 		Connect("input_event", this, "OnInputEvent");
 	}
 
+	public override void _PhysicsProcess(float delta)
+	{
+		if (!IsSkyFalling)
+		{
+			if (Body.GlobalPosition.y >= GetViewport().Size.y + Sprite.Texture.GetSize().y)
+				QueueFree();
+
+			return;
+		}
+
+		if(Body.Position.DistanceTo(Vector2.Zero) <= 5)
+		{
+			Body.LinearVelocity = Vector2.Zero;
+			Body.GravityScale = 0;
+
+			Body.Position = Vector2.Zero;
+
+			IsSkyFalling = false;
+
+			EmitSignal("SkyLeafDropped");
+		}
+	}
+
 	public void SetColor(LeafColor color)
 	{
 		Color = color;
@@ -36,6 +62,9 @@ public class Leaf : Area2D
 
 	void OnInputEvent(Node viewport, InputEvent input, int shapeID)
 	{
+		if (IsSkyFalling)
+			return;
+
 		if (input.IsActionPressed("interact"))
 		{
 			EmitSignal("LeafClicked", ParentTree, ID);

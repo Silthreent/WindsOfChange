@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 public class Tree : Sprite
 {
+	[Signal]
+	delegate void LeavesDropped();
+
 	List<Leaf> Leaves;
 
 	float DropWait = .15f;
@@ -31,6 +34,8 @@ public class Tree : Sprite
 				for(int x = 0; x < FallAtOnce; x++)
 				{
 					Leaves[0].Body.ApplyImpulse(Vector2.Zero, FallImpulse * ((x + 1) / 1));
+					Leaves[0].Monitorable = false;
+					Leaves[0].Monitoring = false;
 					Leaves.RemoveAt(0);
 
 					if (Leaves.Count <= 0)
@@ -42,6 +47,8 @@ public class Tree : Sprite
 		}
 		else
 		{
+			EmitSignal("LeavesDropped");
+
 			SetPhysicsProcess(false);
 		}
 	}
