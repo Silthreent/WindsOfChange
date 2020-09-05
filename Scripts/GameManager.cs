@@ -5,6 +5,7 @@ public class GameManager : Node2D
 	LeafManager LeafManager;
 
 	int MoveCount = 0;
+	int WinCount = 0;
 
 	bool GeneratedLeaves = false;
 
@@ -54,7 +55,8 @@ public class GameManager : Node2D
 		if (CheckVictory())
 		{
 			GD.Print("VICTORY");
-
+			WinCount++;
+			GD.Print($"Wins: {WinCount}");
 			LeafManager.DropLeaves();
 		}
 	}
