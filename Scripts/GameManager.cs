@@ -3,6 +3,7 @@ using Godot;
 public class GameManager : Node2D
 {
 	LeafManager LeafManager;
+	Label WinCountText;
 
 	int MoveCount = 0;
 	int WinCount = 0;
@@ -17,6 +18,9 @@ public class GameManager : Node2D
 		LeafManager.Connect("SkyLeavesDropped", this, "OnSkyLeavesDropped");
 
 		LeafManager.GenerateLeaves(new LeafColor[] { LeafColor.Blue, LeafColor.Green, LeafColor.Red });
+
+		WinCountText = FindNode("WinCount") as Label;
+		WinCountText.Text = WinCount.ToString();
 	}
 
 	bool CheckVictory()
@@ -56,6 +60,7 @@ public class GameManager : Node2D
 		{
 			GD.Print("VICTORY");
 			WinCount++;
+			WinCountText.Text = WinCount.ToString();
 			GD.Print($"Wins: {WinCount}");
 			LeafManager.DropLeaves();
 		}
