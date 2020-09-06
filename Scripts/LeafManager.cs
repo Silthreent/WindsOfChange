@@ -23,6 +23,8 @@ public class LeafManager : Node2D
 
 	AudioStreamPlayer[] LeafRustle;
 
+	bool FirstLevel = true;
+
 	public override void _Ready()
 	{
 		RNG = new Random();
@@ -139,17 +141,37 @@ public class LeafManager : Node2D
 		}
 
 		// Go through all the new leaves and color them
+		// The first level has special simple coloring, for a tutorial of sorts
 		// You might say "but silth, couldn't we do that at the same time as spawning them?"
 		// And to that I say, yes
-		int leafCount = 0;
-		for(int color = 1; color < Enum.GetValues(typeof(LeafColor)).Length; color++)
+		if(!FirstLevel)
 		{
-			for (int x = 0; x < Trees[0].GetLeafCount(); x++)
+			int leafCount = 0;
+			for (int color = 1; color < Enum.GetValues(typeof(LeafColor)).Length; color++)
 			{
-				Trees[leafCount % Trees.Length].ColorFirstAvailableLeaf((LeafColor)color, RNG.Next(0, Trees[leafCount % Trees.Length].GetLeafCount()));
+				for (int x = 0; x < Trees[0].GetLeafCount(); x++)
+				{
+					Trees[leafCount % Trees.Length].ColorFirstAvailableLeaf((LeafColor)color, RNG.Next(0, Trees[leafCount % Trees.Length].GetLeafCount()));
 
-				leafCount++;
+					leafCount++;
+				}
 			}
+		}
+		// If it's the first level, make a custom level with only 2 leaves out of place
+		else
+		{
+			for(int x = 0; x < Trees.Length; x++)
+			{
+				for (int y = 0; y < Trees[x].GetLeafCount(); y++)
+				{
+					Trees[x].GetLeafByIndex(y).SetColor((LeafColor)x + 1);
+				}
+			}
+
+			Trees[0].GetLeafByIndex(RNG.Next(0, Trees[0].GetLeafCount())).SetColor((LeafColor)2);
+			Trees[1].GetLeafByIndex(RNG.Next(0, Trees[1].GetLeafCount())).SetColor((LeafColor)1);
+
+			FirstLevel = false;
 		}
 	}
 
@@ -172,6 +194,11 @@ public class LeafManager : Node2D
 			return null;
 
 		return Trees[treeID];
+	}
+
+	public void SkipFirstLevel()
+	{
+		FirstLevel = false;
 	}
 
 	// Swap two leaves

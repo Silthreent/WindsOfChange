@@ -17,6 +17,7 @@ public class MainMenu : MarginContainer
 		StressFree = FindNode("StressFreeToggle") as CheckButton;
 
 		Leaves = FindNode("LeafManager") as LeafManager;
+		Leaves.SkipFirstLevel();
 		Leaves.GenerateLeaves();
 		Leaves.Connect("LeavesDropped", this, "OnLeavesDropped");
 		Leaves.Connect("SkyLeavesDropped", this, "OnSkyLeavesDropped");
