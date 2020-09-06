@@ -1,4 +1,5 @@
 using Godot;
+using System;
 
 public class Leaf : Area2D
 {
@@ -61,7 +62,7 @@ public class Leaf : Area2D
 	{
 		Color = color;
 
-		Sprite.Modulate = color.GetLeafColor();
+		Sprite.Modulate = color.GetRandomColor();
 	}
 
 	void OnInputEvent(Node viewport, InputEvent input, int shapeID)
@@ -86,6 +87,13 @@ public enum LeafColor
 
 public static class LeafColorExtension
 {
+	static Random RNG;
+
+	static LeafColorExtension()
+	{
+		RNG = new Random();
+	}
+
 	public static Color GetLeafColor(this LeafColor leafColor)
 	{
 		switch(leafColor)
@@ -102,6 +110,30 @@ public static class LeafColorExtension
 			default:
 				return new Color(0, 0, 0);
 		}
+	}
+
+	public static Color GetRandomColor(this LeafColor leafColor)
+	{
+		var v = new Vector3(155, 155, 155);
+		switch(leafColor)
+		{
+			case LeafColor.Red:
+				v.x += 100;
+				break;
+
+			case LeafColor.Green:
+				v.y += 100;
+				break;
+
+			case LeafColor.Blue:
+				v.z += 100;
+				break;
+		}
+
+		return new Color(
+			RNG.Next((int)v.x - 50, (int)v.x) / 255f,
+			RNG.Next((int)v.y - 50, (int)v.y) / 255f,
+			RNG.Next((int)v.z - 50, (int)v.z) / 255f); ;
 	}
 }
 
