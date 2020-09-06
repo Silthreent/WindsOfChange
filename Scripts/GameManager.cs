@@ -23,7 +23,7 @@ public class GameManager : Node2D
 		LeafManager.Connect("LeavesDropped", this, "OnLeavesDropped");
 		LeafManager.Connect("SkyLeavesDropped", this, "OnSkyLeavesDropped");
 
-		LeafManager.GenerateLeaves(new LeafColor[] { LeafColor.Blue, LeafColor.Green, LeafColor.Red });
+		LeafManager.GenerateLeaves();
 
 		WinCountText = FindNode("WinCount") as Label;
 		WinCountText.Text = WinCount.ToString();
@@ -107,7 +107,7 @@ public class GameManager : Node2D
 	{
 		if(!GeneratedLeaves)
 		{
-			LeafManager.GenerateLeaves(new LeafColor[] { LeafColor.Blue, LeafColor.Green, LeafColor.Red });
+			LeafManager.GenerateLeaves();
 			GeneratedLeaves = true;
 		}
 	}

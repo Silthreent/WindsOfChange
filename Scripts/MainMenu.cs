@@ -17,7 +17,7 @@ public class MainMenu : MarginContainer
 		StressFree = FindNode("StressFreeToggle") as CheckButton;
 
 		Leaves = FindNode("LeafManager") as LeafManager;
-		Leaves.GenerateLeaves(new LeafColor[] { LeafColor.Green, LeafColor.Blue, LeafColor.Red });
+		Leaves.GenerateLeaves();
 		Leaves.Connect("LeavesDropped", this, "OnLeavesDropped");
 		Leaves.Connect("SkyLeavesDropped", this, "OnSkyLeavesDropped");
 	}
@@ -46,7 +46,7 @@ public class MainMenu : MarginContainer
 
 	void OnLeavesDropped()
 	{
-		Leaves.GenerateLeaves(new LeafColor[] { LeafColor.Green, LeafColor.Blue });
+		Leaves.GenerateLeaves();
 	}
 
 	void OnSkyLeavesDropped()

@@ -84,7 +84,7 @@ public class LeafManager : Node2D
 		}
 	}
 
-	public void GenerateLeaves(LeafColor[] colors)
+	public void GenerateLeaves()
 	{
 		for (int x = 0; x < Trees.Length; x++)
 		{
@@ -112,11 +112,11 @@ public class LeafManager : Node2D
 		}
 
 		int leafCount = 0;
-		for(int color = 0; color < colors.Length; color++)
+		for(int color = 1; color < Enum.GetValues(typeof(LeafColor)).Length; color++)
 		{
 			for (int x = 0; x < Trees[0].GetLeafCount(); x++)
 			{
-				Trees[leafCount % Trees.Length].ColorFirstAvailableLeaf(colors[color], RNG.Next(0, Trees[leafCount % Trees.Length].GetLeafCount()));
+				Trees[leafCount % Trees.Length].ColorFirstAvailableLeaf((LeafColor)color, RNG.Next(0, Trees[leafCount % Trees.Length].GetLeafCount()));
 
 				leafCount++;
 			}
