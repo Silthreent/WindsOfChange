@@ -20,7 +20,9 @@ public class LeafManager : Node2D
 
 	int TreesDropping = 0;
 	int SkyLeavesDropping = 0;
-	
+
+	AudioStreamPlayer[] LeafRustle;
+
 	public override void _Ready()
 	{
 		RNG = new Random();
@@ -42,6 +44,11 @@ public class LeafManager : Node2D
 				leafPos.GetNode<Sprite>("TestLeaf").Visible = false;
 			}
 		}
+
+		LeafRustle = new AudioStreamPlayer[3];
+		LeafRustle[0] = GetNode<AudioStreamPlayer>("LeafRustle0");
+		LeafRustle[1] = GetNode<AudioStreamPlayer>("LeafRustle1");
+		LeafRustle[2] = GetNode<AudioStreamPlayer>("LeafRustle2");
 	}
 
 	public override void _PhysicsProcess(float delta)
@@ -90,6 +97,7 @@ public class LeafManager : Node2D
 					HeldLeaf.Position = Vector2.Zero;
 				}
 
+				LeafRustle[RNG.Next(0, LeafRustle.Length)].Play();
 				HeldLeaf = null;
 			}
 		}
@@ -201,6 +209,7 @@ public class LeafManager : Node2D
 		if(HeldLeaf == null)
 		{
 			GD.Print($"Picking up leaf: {leafID}");
+			LeafRustle[RNG.Next(0, LeafRustle.Length)].Play();
 			HeldLeaf = Trees[treeNumber].GetLeafByID(leafID);
 		}
 	}

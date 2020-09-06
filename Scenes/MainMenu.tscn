@@ -5,10 +5,10 @@
 [ext_resource path="res://Scenes/LeafManager.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Assets/Sprites/Grass.png" type="Texture" id=4]
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=1]
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="DynamicFont" id=2]
 size = 32
 outline_size = 1
 outline_color = Color( 0, 0, 0, 1 )
@@ -52,7 +52,7 @@ margin_bottom = 64.0
 [node name="PlayButton" type="Button" parent="VBox"]
 margin_right = 212.0
 margin_bottom = 20.0
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 1 )
 text = "Play"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBox"]
@@ -64,7 +64,7 @@ margin_bottom = 64.0
 margin_top = 6.0
 margin_right = 132.0
 margin_bottom = 34.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 text = "Stress-Free"
 
 [node name="StressFreeToggle" type="CheckButton" parent="VBox/HBoxContainer"]

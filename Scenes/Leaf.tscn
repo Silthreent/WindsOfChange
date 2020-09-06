@@ -30,6 +30,7 @@ gravity_scale = 0.0
 [node name="Sprite" type="AnimatedSprite" parent="Body"]
 scale = Vector2( 2, 2 )
 frames = SubResource( 3 )
+frame = 1
 playing = true
 
 [node name="Shape" type="CollisionPolygon2D" parent="."]

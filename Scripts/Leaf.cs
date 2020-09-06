@@ -28,6 +28,7 @@ public class Leaf : Area2D
 		Sprite = FindNode("Sprite") as AnimatedSprite;
 		Body = GetNode<RigidBody2D>("Body");
 
+
 		Connect("input_event", this, "OnInputEvent");
 	}
 

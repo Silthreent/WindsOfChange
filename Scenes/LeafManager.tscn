@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/LeafManager.cs" type="Script" id=1]
 [ext_resource path="res://Scenes/Leaf.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Tree.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Assets/Audio/LeafRustle2.wav" type="AudioStream" id=4]
+[ext_resource path="res://Assets/Audio/LeafRustle1.wav" type="AudioStream" id=5]
+[ext_resource path="res://Assets/Audio/LeafRustle0.wav" type="AudioStream" id=6]
 
 [node name="LeafManager" type="Node2D"]
 script = ExtResource( 1 )
@@ -16,3 +19,12 @@ position = Vector2( 1044.38, 262.527 )
 
 [node name="Tree2" parent="." instance=ExtResource( 3 )]
 position = Vector2( 649.059, 586.976 )
+
+[node name="LeafRustle0" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+
+[node name="LeafRustle1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+
+[node name="LeafRustle2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
