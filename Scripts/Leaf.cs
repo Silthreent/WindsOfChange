@@ -45,13 +45,17 @@ public class Leaf : Area2D
 			Body.LinearVelocity = Vector2.Zero;
 			Body.GravityScale = 0;
 
-			Body.Position = Vector2.Zero;
+			var transform = (Transform2D)Physics2DServer.BodyGetState(Body.GetRid(), Physics2DServer.BodyState.Transform);
+			transform.origin = new Vector2(0, 0) + GlobalPosition;
+			Physics2DServer.BodySetState(Body.GetRid(), Physics2DServer.BodyState.Transform, transform);
 
 			IsSkyFalling = false;
 
 			EmitSignal("SkyLeafDropped");
 		}
 	}
+
+	
 
 	public void SetColor(LeafColor color)
 	{
