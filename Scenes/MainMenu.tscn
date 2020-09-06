@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/MainMenu.cs" type="Script" id=1]
 [ext_resource path="res://Assets/Kenney High.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://Scenes/LeafManager.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Assets/Sprites/Grass.png" type="Texture" id=4]
 
 [sub_resource type="DynamicFont" id=2]
 font_data = ExtResource( 2 )
@@ -25,6 +26,12 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Ground" type="Sprite" parent="."]
+position = Vector2( 289.235, -2.15845 )
+rotation = 3.14159
+scale = Vector2( 40.5458, 40.5458 )
+texture = ExtResource( 4 )
 
 [node name="LeafManager" parent="." instance=ExtResource( 3 )]
 position = Vector2( 433.319, -96.8359 )
