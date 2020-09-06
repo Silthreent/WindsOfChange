@@ -33,6 +33,9 @@ public class Leaf : Area2D
 
 	public override void _PhysicsProcess(float delta)
 	{
+		// If we aren't falling from the sky, make sure we aren't below the viewport
+		// Purge the leaf if we are
+		// Otherwise, just the skip the rest of the method
 		if (!IsSkyFalling)
 		{
 			if (Body.GlobalPosition.y >= GetViewport().Size.y + 50)
@@ -41,6 +44,7 @@ public class Leaf : Area2D
 			return;
 		}
 
+		// The leaf has arrived into position, stop it from moving anymore and set it to true position
 		if(Body.Position.DistanceTo(Vector2.Zero) <= 5)
 		{
 			Body.LinearVelocity = Vector2.Zero;
@@ -56,8 +60,7 @@ public class Leaf : Area2D
 		}
 	}
 
-	
-
+	// Color the leaf the specified color
 	public void SetColor(LeafColor color)
 	{
 		Color = color;
@@ -65,14 +68,18 @@ public class Leaf : Area2D
 		Sprite.Modulate = color.GetRandomColor();
 	}
 
+	// A leaf is clicked, so make sure we aren't doing an animation then tell everyone
 	void OnInputEvent(Node viewport, InputEvent input, int shapeID)
 	{
 		if (IsSkyFalling)
 			return;
 
-		if (input.IsActionPressed("interact"))
+		if(input is InputEventMouseButton)
 		{
-			EmitSignal("LeafClicked", ParentTree, ID);
+			if(input.IsPressed())
+			{
+				EmitSignal("LeafClicked", ParentTree, ID);
+			}
 		}
 	}
 }
@@ -114,7 +121,10 @@ public static class LeafColorExtension
 
 	public static Color GetRandomColor(this LeafColor leafColor)
 	{
+		// Set starting color values
 		var v = new Vector3(155, 155, 155);
+
+		// The chosen color should be given more focus, so up it's color value
 		switch(leafColor)
 		{
 			case LeafColor.Red:
@@ -130,6 +140,7 @@ public static class LeafColorExtension
 				break;
 		}
 
+		// Modify each color randomly within the given threshold
 		return new Color(
 			RNG.Next((int)v.x - 50, (int)v.x) / 255f,
 			RNG.Next((int)v.y - 50, (int)v.y) / 255f,

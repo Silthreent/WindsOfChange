@@ -23,14 +23,18 @@ public class Tree : Sprite
 		SetPhysicsProcess(false);
 	}
 
+	// This should only be running if the tree is dropping it's leaves
 	public override void _PhysicsProcess(float delta)
 	{
+		// If we have any leaves left to drop, think about dropping one
 		if(Leaves.Count > 0)
 		{
 			DropTimer -= delta;
 
+			// Time's up, time to drop another leaf
 			if(DropTimer <= 0)
 			{
+				// Drop some amount of leaves at random, giving them different impulses
 				for(int x = 0; x < FallAtOnce; x++)
 				{
 					Leaves[0].Body.ApplyImpulse(Vector2.Zero, FallImpulse * ((x + 1) / 1));
@@ -45,6 +49,7 @@ public class Tree : Sprite
 				DropTimer = DropWait;
 			}
 		}
+		// No more leaves to drop, so we must be done time to tell everyone
 		else
 		{
 			EmitSignal("LeavesDropped");
@@ -63,6 +68,7 @@ public class Tree : Sprite
 		Leaves.Remove(leaf);
 	}
 
+	// Find the first empty leaf, starting from an index, and color it the given color
 	public void ColorFirstAvailableLeaf(LeafColor color, int starting)
 	{
 		if (starting >= Leaves.Count)
@@ -80,6 +86,7 @@ public class Tree : Sprite
 		ColorFirstAvailableLeaf(color, starting + 1);
 	}
 
+	// Start dropping every leaf off the tree
 	public void DropLeaves()
 	{
 		foreach(var x in Leaves)
