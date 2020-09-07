@@ -18,7 +18,7 @@ position = Vector2( 268.833, 267.419 )
 position = Vector2( 1044.38, 262.527 )
 
 [node name="Tree2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 649.059, 586.976 )
+position = Vector2( 636.171, 591.272 )
 
 [node name="LeafRustle0" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )

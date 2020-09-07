@@ -16,7 +16,7 @@ animations = [ {
 "frames": [ SubResource( 1 ), SubResource( 2 ) ],
 "loop": true,
 "name": "default",
-"speed": 3.0
+"speed": 2.0
 } ]
 
 [node name="Leaf" type="Area2D"]
