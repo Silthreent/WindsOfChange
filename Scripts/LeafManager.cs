@@ -238,6 +238,7 @@ public class LeafManager : Node2D
 			GD.Print($"Picking up leaf: {leafID}");
 			LeafRustle[RNG.Next(0, LeafRustle.Length)].Play();
 			HeldLeaf = Trees[treeNumber].GetLeafByID(leafID);
+			HeldLeaf.ZIndex = 99;
 		}
 	}
 
