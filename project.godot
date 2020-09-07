@@ -15,9 +15,10 @@ _global_script_class_icons={
 
 [application]
 
-config/name="MiniJam62"
+config/name="WindsOfChange"
 run/main_scene="res://Scenes/MainMenu.tscn"
-config/icon="res://icon.png"
+boot_splash/image="res://Assets/Sprites/Logo.png"
+config/icon="res://Assets/Sprites/Leaf.png"
 
 [display]
 
